@@ -1,0 +1,92 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: '1'
+    kubectl.kubernetes.io/last-applied-configuration: >
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"helm-guestbook","app.kubernetes.io/instance":"helm-guestbook","chart":"helm-guestbook-0.1.0","heritage":"Helm","release":"helm-guestbook"},"name":"helm-guestbook","namespace":"default"},"spec":{"replicas":1,"revisionHistoryLimit":3,"selector":{"matchLabels":{"app":"helm-guestbook","release":"helm-guestbook"}},"template":{"metadata":{"labels":{"app":"helm-guestbook","release":"helm-guestbook"}},"spec":{"containers":[{"image":"gcr.io/heptio-images/ks-guestbook-demo:0.1","imagePullPolicy":"IfNotPresent","livenessProbe":{"httpGet":{"path":"/","port":"http"}},"name":"helm-guestbook","ports":[{"containerPort":80,"name":"http","protocol":"TCP"}],"readinessProbe":{"httpGet":{"path":"/","port":"http"}},"resources":{}}]}}}}
+  creationTimestamp: '2024-11-30T10:25:50Z'
+  generation: 1
+  labels:
+    app: helm-guestbook
+    app.kubernetes.io/instance: helm-guestbook
+    chart: helm-guestbook-0.1.0
+    heritage: Helm
+    release: helm-guestbook
+  name: helm-guestbook
+  namespace: default
+  resourceVersion: '78771'
+  uid: f767ece3-da67-4fd3-8561-b12d016d4114
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: helm-guestbook
+      release: helm-guestbook
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: helm-guestbook
+        release: helm-guestbook
+    spec:
+      containers:
+        - image: gcr.io/heptio-images/ks-guestbook-demo:0.1
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: http
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: helm-guestbook
+          ports:
+            - containerPort: 80
+              name: http
+              protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: http
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status:
+  availableReplicas: 1
+  conditions:
+    - lastTransitionTime: '2024-11-30T10:27:02Z'
+      lastUpdateTime: '2024-11-30T10:27:02Z'
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: 'True'
+      type: Available
+    - lastTransitionTime: '2024-11-30T10:25:50Z'
+      lastUpdateTime: '2024-11-30T10:27:02Z'
+      message: ReplicaSet "helm-guestbook-7ddc9896c4" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: 'True'
+      type: Progressing
+  observedGeneration: 1
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1
